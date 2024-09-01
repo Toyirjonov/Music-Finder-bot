@@ -25,7 +25,7 @@ async def send_welcome(message: types.Message):
 @dp.message_handler()
 async def search(message: types.Message):
     query = message.text
-    wait_message = await message.reply('Ожидайте...')  # Сохраняем сообщение
+    wait_message = await message.reply('Ожидайте...')  
 
     YDL_OPTIONS = {
         'format': 'bestaudio/best',
@@ -46,13 +46,13 @@ async def search(message: types.Message):
             filepath = filename_collector.filenames[0]
             
             if filepath.endswith(".mp3"):
-                await wait_message.delete()  # Удаляем сообщение "Ожидайте..."
+                await wait_message.delete()  
                 await message.reply_document(open(filepath, 'rb'))
                 
                 time.sleep(5)
                 os.remove(filepath)
         except Exception as e:
-            await wait_message.delete()  # Удаляем сообщение "Ожидайте..." в случае ошибки
+            await wait_message.delete() 
             await message.reply(f"Произошла ошибка: {str(e)}")
 
 if __name__ == '__main__':
