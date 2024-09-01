@@ -6,7 +6,7 @@ import time
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token="7448556215:AAEwtFmRU0sb1SjXuOXkA03dAtJOmgT3H6s") 
+bot = Bot(token="Your_bot_token") 
 dp = Dispatcher(bot)
 
 class FilenameCollectorPP(yt_dlp.postprocessor.common.PostProcessor):
