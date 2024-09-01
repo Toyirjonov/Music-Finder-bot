@@ -25,8 +25,8 @@ async def send_welcome(message: types.Message):
 @dp.message_handler()
 async def search(message: types.Message):
     query = message.text
-    await message.reply('Ожидайте...')
-    
+    wait_message = await message.reply('Ожидайте...')  # Сохраняем сообщение
+
     YDL_OPTIONS = {
         'format': 'bestaudio/best',
         'noplaylist': 'True',
@@ -44,12 +44,15 @@ async def search(message: types.Message):
         try:
             video = ydl.extract_info(f"ytsearch:{query}", download=True)['entries'][0]
             filepath = filename_collector.filenames[0]
+            
             if filepath.endswith(".mp3"):
+                await wait_message.delete()  # Удаляем сообщение "Ожидайте..."
                 await message.reply_document(open(filepath, 'rb'))
-                await message.reply(f'Файл был отправлен!\nСпасибо за использование бота\n\n__{query}__')
+                
                 time.sleep(5)
                 os.remove(filepath)
         except Exception as e:
+            await wait_message.delete()  # Удаляем сообщение "Ожидайте..." в случае ошибки
             await message.reply(f"Произошла ошибка: {str(e)}")
 
 if __name__ == '__main__':
